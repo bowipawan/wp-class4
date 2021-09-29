@@ -28,7 +28,6 @@ ActiveRecord::Schema.define(version: 2021_09_29_100505) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "address"
     t.string "postal_code"
-    t.string "password_digest"
     t.string "pass"
   end
 
