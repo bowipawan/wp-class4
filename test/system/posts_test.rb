@@ -14,7 +14,6 @@ class PostsTest < ApplicationSystemTestCase
     visit posts_url
     click_on "New Post"
 
-    fill_in "Date", with: @post.date
     fill_in "Msg", with: @post.msg
     fill_in "User", with: @post.user_id
     click_on "Create Post"
@@ -27,7 +26,6 @@ class PostsTest < ApplicationSystemTestCase
     visit posts_url
     click_on "Edit", match: :first
 
-    fill_in "Date", with: @post.date
     fill_in "Msg", with: @post.msg
     fill_in "User", with: @post.user_id
     click_on "Update Post"

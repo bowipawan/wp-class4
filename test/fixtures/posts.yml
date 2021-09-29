@@ -2,10 +2,8 @@
 
 one:
   msg: MyString
-  date: 2021-09-17
   user: one
 
 two:
   msg: MyString
-  date: 2021-09-17
   user: two

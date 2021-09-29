@@ -6,6 +6,11 @@
 </p>
 
 <p>
+  <strong>Pass:</strong>
+  <%= @user.pass %>
+</p>
+
+<p>
   <strong>Name:</strong>
   <%= @user.name %>
 </p>
@@ -27,7 +32,7 @@
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %> |
-<%= link_to 'New Post', new_post_path(:user_id=> @user.id, :user=> @user) %>
+<%= link_to 'New Post', new_post_path(:user_id=> @user.id) %>
 
 <table>
   <thead>
@@ -42,10 +47,10 @@
     <% @user.posts.each do |post| %>
       <tr>
         <td><%= post.msg %></td>
-        <td><%= post.date %></td>
+        <td><%= post.updated_at %></td>
         <td><%= link_to 'Edit', edit_post_path(post) %></td>
         <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
-</table>
+</table> 

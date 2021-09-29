@@ -4,5 +4,5 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   get 'create_fast', to: "users#create_fast"
   get 'main', to: "main#main"
-  post "/main/login"
+  post '/main/login'
 end
