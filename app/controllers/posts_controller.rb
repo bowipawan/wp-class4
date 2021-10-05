@@ -1,5 +1,8 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :check_logged_in
+  before_action :check_user, only: %i[ edit update destroy ]
+  after_action :check_user, only: %i[ new ]
 
   # GET /posts or /posts.json
   def index
@@ -12,9 +15,8 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-    @user_id = params[:user_id]
     @post = Post.new
-    @post.user_id = Integer(@user_id)
+    @post.user_id = params[:user_id]
   end
 
   # GET /posts/1/edit
@@ -30,7 +32,7 @@ class PostsController < ApplicationController
         format.html { redirect_to @post, notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new, user_id: @post.user_id, status: :unprocessable_entity }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
@@ -67,5 +69,17 @@ class PostsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def post_params
       params.require(:post).permit(:msg, :user_id)
+    end
+
+    def check_logged_in
+      if !session[:user_id]
+        redirect_to main_path, alert: "Please login."
+      end
+    end
+
+    def check_user
+      if session[:user_id] != @post.user_id
+        redirect_to main_path, alert: "Please login."
+      end
     end
 end
