@@ -1,8 +1,8 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
   before_action :check_logged_in
-  before_action :check_user, only: %i[ edit update destroy ]
-  after_action :check_user, only: %i[ new ]
+  before_action :check_user, only: %i[ show edit update destroy ]
+  before_action :check_user_create, only: %i[ create ]
 
   # GET /posts or /posts.json
   def index
@@ -79,6 +79,12 @@ class PostsController < ApplicationController
 
     def check_user
       if session[:user_id] != @post.user_id
+        redirect_to main_path, alert: "Please login."
+      end
+    end
+
+    def check_user_create
+      if session[:user_id] != Integer(post_params[:user_id])
         redirect_to main_path, alert: "Please login."
       end
     end

@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
-  before_action :check_logged_in, except: %i[ new ]
-  before_action :check_user, only: %i[ edit update destroy ]
+  before_action :check_logged_in, except: %i[ index new create ]
+  before_action :check_user, only: %i[ show edit update destroy ]
 
   # GET /users or /users.json
   def index
@@ -27,6 +27,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        session[:user_id] = @user.id
         format.html { redirect_to @user, notice: "User was successfully created." }
         format.json { render :show, status: :created, location: @user }
       else
@@ -61,6 +62,8 @@ class UsersController < ApplicationController
   # create_fast
   def create_fast
     @user = User.create(name:params[:name], email:params[:email])
+    session[:user_id] = @user.id
+
     respond_to do |format|
       if @user.save
         format.html { redirect_to @user, notice: "User was successfully created." }
